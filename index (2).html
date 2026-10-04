@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solution 4 Finance | Home, Personal, Business &amp; Car Loans</title>
+<meta name="description" content="Solution 4 Finance matches you with the right lender for home, personal, construction, car and business loans. 15 years in banking and finance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #10302B;
+    --ink-2: #1B4A42;
+    --paper: #F3F6F4;
+    --mint: #CFE8DD;
+    --marigold: #F0A202;
+    --marigold-hi: #FFB627;
+    --slate: #4A5D58;
+    --line: #D5DFDA;
+    --white: #FFFFFF;
+    --error: #B42318;
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --ease: cubic-bezier(.2, .7, .2, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--marigold); outline-offset: 3px; border-radius: 6px; }
+  .wrap { width: min(1160px, 100% - 40px); margin-inline: auto; }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 13px 24px; border-radius: 999px; border: 2px solid transparent;
+    font: 600 1rem var(--body); text-decoration: none; cursor: pointer;
+    transition: transform .2s var(--ease), background .2s, border-color .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-gold { background: var(--marigold); color: var(--ink); }
+  .btn-gold:hover { background: var(--marigold-hi); }
+  .btn-ghost { border-color: rgba(243, 246, 244, .35); color: var(--paper); }
+  .btn-ghost:hover { border-color: var(--paper); }
+  .btn-ink { background: var(--ink); color: var(--paper); }
+  .btn-ink:hover { background: var(--ink-2); }
+  .btn-sm { padding: 8px 18px; font-size: .92rem; }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(16, 48, 43, .94); color: var(--paper);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(243, 246, 244, .08);
+  }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 700 1.15rem var(--display); }
+  .brand-mark {
+    width: 38px; height: 38px; border-radius: 11px; background: var(--marigold); color: var(--ink);
+    display: grid; place-items: center; font: 800 .82rem var(--display); letter-spacing: -.02em;
+  }
+  .nav-links { display: flex; gap: 30px; list-style: none; }
+  .nav-links a { text-decoration: none; font-weight: 500; font-size: .95rem; opacity: .78; transition: opacity .2s; }
+  .nav-links a:hover { opacity: 1; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background:
+      radial-gradient(900px 500px at 85% 20%, rgba(207, 232, 221, .10), transparent 60%),
+      var(--ink);
+    color: var(--paper);
+    padding: 76px 0 92px;
+  }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 60px; align-items: center; }
+  .hero h1 {
+    font: 800 clamp(2.7rem, 5.8vw, 4.7rem)/1.02 var(--display);
+    letter-spacing: -.03em; max-width: 12ch;
+  }
+  .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .1em; margin-bottom: -.1em; }
+  .w > span {
+    display: inline-block; transform: translateY(110%);
+    animation: rise .9s var(--ease) forwards;
+    animation-delay: calc(var(--i) * 70ms + 120ms);
+  }
+  @keyframes rise { to { transform: translateY(0); } }
+  .lede { margin-top: 24px; max-width: 46ch; font-size: 1.12rem; color: rgba(243, 246, 244, .78); }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .assure { list-style: none; margin-top: 36px; display: grid; gap: 10px; font-size: .95rem; color: rgba(243, 246, 244, .78); }
+  .assure li { display: flex; align-items: center; gap: 10px; }
+  .assure svg { flex: none; color: var(--marigold); }
+  .fade-in { opacity: 0; animation: fade .8s var(--ease) forwards; animation-delay: .75s; }
+  @keyframes fade { to { opacity: 1; } }
+
+  /* ---------- Calculator ---------- */
+  .calc {
+    background: var(--white); color: var(--ink);
+    border-radius: 26px; padding: 30px;
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .55);
+    opacity: 0; transform: translateY(28px) rotate(1.2deg);
+    animation: calcIn 1s var(--ease) .55s forwards;
+  }
+  @keyframes calcIn { to { opacity: 1; transform: none; } }
+  .calc h2 { font: 700 1.3rem var(--display); margin-bottom: 4px; }
+  .calc-sub { font-size: .9rem; color: var(--slate); margin-bottom: 18px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .chip {
+    border: 1.5px solid var(--line); background: none; border-radius: 999px;
+    padding: 7px 15px; font: 600 .88rem var(--body); color: var(--slate); cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .chip:hover { border-color: var(--ink); color: var(--ink); }
+  .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .field { margin-bottom: 18px; }
+  .field-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; font-size: .92rem; color: var(--slate); }
+  .field-top output { font: 700 1.08rem var(--display); color: var(--ink); }
+  input[type="range"] { width: 100%; accent-color: var(--ink); cursor: pointer; height: 22px; }
+  .result {
+    display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center;
+    border-top: 1px solid var(--line); padding-top: 22px; margin-top: 4px;
+  }
+  .donut { width: 118px; height: 118px; display: block; }
+  .donut circle { fill: none; stroke-width: 15; }
+  .donut .base { stroke: var(--mint); }
+  .donut .int {
+    stroke: var(--marigold); transform: rotate(-90deg); transform-origin: 60px 60px;
+    transition: stroke-dasharray .7s var(--ease);
+  }
+  .emi-label { font-size: .9rem; color: var(--slate); }
+  .emi { font: 800 2.5rem/1.05 var(--display); letter-spacing: -.025em; font-variant-numeric: tabular-nums; }
+  .breakdown { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; font-size: .84rem; color: var(--slate); }
+  .breakdown b { display: block; color: var(--ink); font-weight: 600; font-size: .96rem; font-variant-numeric: tabular-nums; }
+  .key { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
+  .calc-cta { margin-top: 22px; width: 100%; }
+
+  /* ---------- Ticker ---------- */
+  .ticker { background: var(--marigold); color: var(--ink); overflow: hidden; white-space: nowrap; padding: 15px 0; }
+  .ticker-track { display: inline-flex; animation: slide 40s linear infinite; font: 700 1.05rem var(--display); }
+  .ticker-track span { padding-right: 56px; }
+  .ticker-track span::before { content: "◆"; font-size: .7em; margin-right: 18px; opacity: .55; vertical-align: 2px; }
+  .ticker:hover .ticker-track { animation-play-state: paused; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* ---------- Shared section heads ---------- */
+  .block { padding: 104px 0; }
+  .h2 { font: 800 clamp(2rem, 3.8vw, 3.1rem)/1.06 var(--display); letter-spacing: -.025em; max-width: 17ch; }
+  .intro { color: var(--slate); max-width: 52ch; margin-top: 14px; font-size: 1.05rem; }
+  .head { display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap; margin-bottom: 52px; }
+
+  /* ---------- Rates ---------- */
+  .rates { border-top: 2px solid var(--ink); }
+  .rate-row {
+    display: grid; grid-template-columns: 1.05fr 1fr 1.6fr 44px; gap: 28px; align-items: center;
+    padding: 28px 0; border-bottom: 1px solid var(--line); text-decoration: none;
+    transition: background .3s var(--ease), padding .3s var(--ease);
+    border-radius: 0;
+  }
+  .rate-row:hover { background: var(--white); padding-inline: 22px; border-radius: 14px; }
+  .rate-name { font: 700 1.35rem var(--display); }
+  .rate-num { font: 800 clamp(2.1rem, 4vw, 3.1rem)/1 var(--display); letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
+  .rate-num small { display: block; margin-top: 6px; font: 600 .82rem var(--body); letter-spacing: 0; color: var(--slate); }
+  .rate-num.ask { font-size: clamp(1.4rem, 2.4vw, 1.8rem); letter-spacing: -.02em; }
+  .rate-desc { color: var(--slate); font-size: .96rem; max-width: 44ch; }
+  .rate-go {
+    width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--ink);
+    display: grid; place-items: center; transition: background .25s, color .25s, transform .3s var(--ease);
+  }
+  .rate-row:hover .rate-go { background: var(--ink); color: var(--marigold); transform: rotate(-45deg); }
+  .fine { margin-top: 18px; font-size: .84rem; color: var(--slate); }
+
+  /* ---------- Process ---------- */
+  .process { background: var(--mint); }
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; position: relative; }
+  .steps::before {
+    content: ""; position: absolute; top: 21px; left: 22px; right: 22px; height: 2px; background: var(--ink);
+    transform: scaleX(0); transform-origin: left; transition: transform 1.6s var(--ease);
+  }
+  .steps.drawn::before { transform: scaleX(1); }
+  .step { position: relative; padding-top: 68px; }
+  .step-n {
+    position: absolute; top: 0; left: 0; z-index: 1;
+    width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: var(--marigold);
+    display: grid; place-items: center; font: 800 1.05rem var(--display);
+    transform: scale(.4); opacity: 0; transition: transform .5s var(--ease), opacity .5s;
+    transition-delay: calc(var(--i) * 350ms);
+  }
+  .steps.drawn .step-n { transform: scale(1); opacity: 1; }
+  .step h3 { font: 700 1.25rem var(--display); margin-bottom: 8px; }
+  .step p { color: var(--slate); font-size: .96rem; }
+
+  /* ---------- Why us ---------- */
+  .why .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: 72px; align-items: start; }
+  .why-left { position: sticky; top: 110px; }
+  .values { list-style: none; margin-top: 36px; border-top: 1px solid var(--line); }
+  .values li { padding: 14px 0; border-bottom: 1px solid var(--line); font-weight: 600; display: flex; gap: 12px; align-items: center; }
+  .values svg { color: var(--marigold); flex: none; }
+  .reasons { display: grid; gap: 44px; }
+  .reason h3 { font: 700 1.55rem/1.2 var(--display); letter-spacing: -.01em; margin-bottom: 10px; }
+  .reason p { color: var(--slate); max-width: 58ch; }
+
+  /* ---------- Vision / mission ---------- */
+  .purpose { background: var(--ink); color: var(--paper); }
+  .purpose .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .purpose h3 { font: 600 1rem var(--body); color: var(--marigold); margin-bottom: 14px; }
+  .purpose blockquote { font: 500 clamp(1.45rem, 2.4vw, 2rem)/1.3 var(--display); letter-spacing: -.01em; }
+
+  /* ---------- Apply ---------- */
+  .apply .wrap { display: grid; grid-template-columns: 1.25fr .75fr; gap: 48px; align-items: start; }
+  .form-card { background: var(--white); border-radius: 24px; padding: 36px; border: 1px solid var(--line); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-field { display: grid; gap: 6px; margin-bottom: 18px; }
+  .form-field label { font-weight: 600; font-size: .92rem; }
+  .form-field input, .form-field select {
+    font: 500 1rem var(--body); color: var(--ink);
+    padding: 13px 14px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--paper);
+    transition: border-color .2s, background .2s;
+  }
+  .form-field input:focus, .form-field select:focus { outline: none; border-color: var(--ink); background: var(--white); }
+  .form-field.invalid input, .form-field.invalid select { border-color: var(--error); }
+  .err { color: var(--error); font-size: .84rem; min-height: 1em; }
+  .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 6px; }
+  .form-note { font-size: .86rem; color: var(--slate); max-width: 36ch; }
+  .status { margin-top: 18px; padding: 14px 16px; border-radius: 12px; background: var(--mint); font-size: .95rem; display: none; }
+  .status.show { display: block; animation: fade .4s var(--ease); }
+  .contact-card { padding-top: 8px; }
+  .contact-card h3 { font: 700 1.4rem var(--display); margin-bottom: 8px; }
+  .contact-card p { color: var(--slate); margin-bottom: 22px; }
+  .phone {
+    display: flex; align-items: center; gap: 14px; padding: 18px 0; border-top: 1px solid var(--line);
+    text-decoration: none; font: 700 1.3rem var(--display); letter-spacing: -.01em; font-variant-numeric: tabular-nums;
+  }
+  .phone:last-of-type { border-bottom: 1px solid var(--line); }
+  .phone-ic { width: 42px; height: 42px; border-radius: 50%; background: var(--ink); color: var(--marigold); display: grid; place-items: center; flex: none; transition: transform .3s var(--ease); }
+  .phone:hover .phone-ic { transform: rotate(-12deg) scale(1.06); }
+
+  /* ---------- Footer ---------- */
+  footer { background: var(--ink); color: rgba(243, 246, 244, .72); padding: 56px 0 40px; font-size: .92rem; }
+  footer .wrap { display: grid; gap: 28px; }
+  .foot-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; color: var(--paper); }
+  .foot-links { display: flex; gap: 24px; flex-wrap: wrap; list-style: none; }
+  .foot-links a { text-decoration: none; }
+  .foot-links a:hover { color: var(--marigold); }
+  .disclaimer { border-top: 1px solid rgba(243, 246, 244, .12); padding-top: 24px; font-size: .82rem; max-width: 90ch; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 960px) {
+    .hero .wrap, .why .wrap, .apply .wrap, .purpose .wrap { grid-template-columns: 1fr; }
+    .hero { padding: 56px 0 72px; }
+    .why-left { position: static; }
+    .steps { grid-template-columns: 1fr 1fr; row-gap: 44px; }
+    .steps::before { display: none; }
+    .rate-row { grid-template-columns: 1fr auto; gap: 8px 20px; }
+    .rate-desc { grid-column: 1 / -1; }
+    .rate-go { display: none; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    .block { padding: 72px 0; }
+    .calc, .form-card { padding: 22px; border-radius: 20px; }
+    .result { grid-template-columns: 1fr; justify-items: start; }
+    .emi { font-size: 2.1rem; }
+    .steps, .grid-2 { grid-template-columns: 1fr; }
+    .brand-name { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .w > span, .calc, .fade-in { transform: none; opacity: 1; }
+    .steps::before { transform: scaleX(1); }
+    .step-n { transform: none; opacity: 1; }
+  }
+</style>
+<!-- n8n chat widget styles -->
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet">
+<style>
+  /* Match the n8n chat widget to the Solution 4 Finance palette */
+  :root {
+    --chat--color-primary: #10302B;
+    --chat--color-primary-shade-50: #1B4A42;
+    --chat--color-primary-shade-100: #0B231F;
+    --chat--color-secondary: #F0A202;
+    --chat--color-secondary-shade-50: #C98500;
+    --chat--color-white: #FFFFFF;
+    --chat--color-light: #F3F6F4;
+    --chat--color-dark: #10302B;
+    --chat--header--background: #10302B;
+    --chat--header--color: #F3F6F4;
+    --chat--toggle--background: #F0A202;
+    --chat--toggle--hover--background: #FFB627;
+    --chat--toggle--active--background: #C98500;
+    --chat--toggle--color: #10302B;
+    --chat--message--user--background: #F0A202;
+    --chat--message--user--color: #10302B;
+    --chat--font-family: "Figtree", "Segoe UI", system-ui, sans-serif;
+    --chat--border-radius: 16px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Solution 4 Finance, home">
+      <span class="brand-mark">S4F</span><span class="brand-name">Solution 4 Finance</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#rates">Loans &amp; rates</a></li>
+      <li><a href="#process">How it works</a></li>
+      <li><a href="#why">Why us</a></li>
+      <li><a href="#apply">Contact</a></li>
+    </ul>
+    <a class="btn btn-gold btn-sm" href="#apply">Apply for a loan</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <h1 aria-label="We find the loan. You keep the savings.">
+        <span class="w" aria-hidden="true"><span style="--i:0">We</span></span>
+        <span class="w" aria-hidden="true"><span style="--i:1">find</span></span>
+        <span class="w" aria-hidden="true"><span style="--i:2">the</span></span>
+        <span class="w" aria-hidden="true"><span style="--i:3">loan.</span></span>
+        <span class="w" aria-hidden="true"><span style="--i:4">You</span></span>
+        <span class="w" aria-hidden="true"><span style="--i:5">keep</span></span>
+        <span class="w" aria-hidden="true"><span style="--i:6">the</span></span>
+        <span class="w" aria-hidden="true"><span style="--i:7">savings.</span></span>
+      </h1>
+      <div class="fade-in">
+        <p class="lede">For 15 years, Solution 4 Finance has matched families and businesses with the right lender, the lowest rate we can find, and paperwork that actually gets approved.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-gold" href="#apply">Apply for a loan</a>
+          <a class="btn btn-ghost" href="tel:+919718948002" target="_blank" rel="noopener">Call an advisor</a>
+        </div>
+        <ul class="assure">
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Home, personal, construction, car and business loans</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Loan and insurance advice under one roof</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Minimum documents, with an advisor handling follow-ups</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- EMI calculator: the centrepiece -->
+    <section class="calc" aria-labelledby="calc-title">
+      <h2 id="calc-title">Work out your EMI</h2>
+      <p class="calc-sub">Pick a loan, then drag the sliders.</p>
+      <div class="chips" role="group" aria-label="Loan type">
+        <button class="chip" type="button" data-type="home" aria-pressed="true">Home</button>
+        <button class="chip" type="button" data-type="personal" aria-pressed="false">Personal</button>
+        <button class="chip" type="button" data-type="construction" aria-pressed="false">Construction</button>
+        <button class="chip" type="button" data-type="car" aria-pressed="false">Car</button>
+      </div>
+      <div class="field">
+        <div class="field-top"><label for="amt">Loan amount</label><output id="amt-out" for="amt"></output></div>
+        <input type="range" id="amt">
+      </div>
+      <div class="field">
+        <div class="field-top"><label for="rate">Interest rate (p.a.)</label><output id="rate-out" for="rate"></output></div>
+        <input type="range" id="rate" min="6" max="20" step="0.05">
+      </div>
+      <div class="field">
+        <div class="field-top"><label for="ten">Tenure</label><output id="ten-out" for="ten"></output></div>
+        <input type="range" id="ten" min="1" step="1">
+      </div>
+      <div class="result" aria-live="polite">
+        <svg class="donut" viewBox="0 0 120 120" role="img" aria-label="Share of interest in total payment">
+          <circle class="base" cx="60" cy="60" r="52"/>
+          <circle class="int" id="donut-int" cx="60" cy="60" r="52" stroke-dasharray="0 400"/>
+        </svg>
+        <div>
+          <div class="emi-label">Monthly EMI</div>
+          <div class="emi" id="emi">₹0</div>
+          <div class="breakdown">
+            <div><span class="key" style="background:var(--mint)"></span>Principal<b id="principal">₹0</b></div>
+            <div><span class="key" style="background:var(--marigold)"></span>Interest<b id="interest">₹0</b></div>
+            <div>Total payable<b id="total">₹0</b></div>
+          </div>
+        </div>
+      </div>
+      <a class="btn btn-ink calc-cta" href="#apply" id="calc-apply">Get this loan checked by an advisor</a>
+    </section>
+  </div>
+</header>
+
+<!-- ============ RATE TICKER ============ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Home loans from 8.40%*</span><span>Personal loans from 10.50%*</span><span>Construction loans from 8.50%*</span><span>Car loans from 8.50%*</span><span>Business loans with minimum documents</span><span>Loan and insurance advice</span>
+    <span>Home loans from 8.40%*</span><span>Personal loans from 10.50%*</span><span>Construction loans from 8.50%*</span><span>Car loans from 8.50%*</span><span>Business loans with minimum documents</span><span>Loan and insurance advice</span>
+  </div>
+</div>
+
+<!-- ============ RATES ============ -->
+<section class="block" id="rates">
+  <div class="wrap">
+    <div class="head">
+      <h2 class="h2">Loans we arrange, and where rates start</h2>
+      <p class="intro">We compare offers across banks and lenders so you don't have to visit each one. Pick a loan to start your application.</p>
+    </div>
+    <div class="rates">
+      <a class="rate-row" href="#apply" data-loan="Home loan">
+        <span class="rate-name">Home loan</span>
+        <span class="rate-num">8.40%*<small>p.a. onwards</small></span>
+        <span class="rate-desc">Buy a new or resale home, or move your existing home loan to a lower rate.</span>
+        <span class="rate-go" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="rate-row" href="#apply" data-loan="Personal loan">
+        <span class="rate-name">Personal loan</span>
+        <span class="rate-num">10.50%*<small>p.a. onwards</small></span>
+        <span class="rate-desc">For weddings, travel, medical bills or clearing costly debt, with quick approval.</span>
+        <span class="rate-go" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="rate-row" href="#apply" data-loan="Construction loan">
+        <span class="rate-name">Construction loan</span>
+        <span class="rate-num">8.50%*<small>p.a. onwards</small></span>
+        <span class="rate-desc">Build on your own plot, with funds released in stages as construction progresses.</span>
+        <span class="rate-go" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="rate-row" href="#apply" data-loan="Car / auto loan">
+        <span class="rate-name">Car / auto loan</span>
+        <span class="rate-num">8.50%*<small>p.a. onwards</small></span>
+        <span class="rate-desc">New or used cars, with tenures that keep the monthly EMI comfortable.</span>
+        <span class="rate-go" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="rate-row" href="#apply" data-loan="Business loan">
+        <span class="rate-name">Business loan</span>
+        <span class="rate-num ask">Rate on request</span>
+        <span class="rate-desc">Working capital or expansion funding for your business, with minimum documents.</span>
+        <span class="rate-go" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+    <p class="fine">*Starting rates are indicative. Your final rate depends on the lender, your credit profile, income and loan amount.</p>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="block process" id="process">
+  <div class="wrap">
+    <div class="head">
+      <h2 class="h2">From first call to money in your account</h2>
+      <p class="intro">We guide you through the whole loan process and catch the problems that usually slow approvals down.</p>
+    </div>
+    <ol class="steps" id="steps">
+      <li class="step"><span class="step-n" style="--i:0">1</span><h3>Tell us what you need</h3><p>Call us or send the form below. An advisor calls back to understand your amount, income and timeline.</p></li>
+      <li class="step"><span class="step-n" style="--i:1">2</span><h3>We compare lenders</h3><p>We line up offers on rate, processing fees and tenure, and explain the trade-offs in plain language.</p></li>
+      <li class="step"><span class="step-n" style="--i:2">3</span><h3>We handle the paperwork</h3><p>You get a clear document checklist. We file the application and follow up with the bank for you.</p></li>
+      <li class="step"><span class="step-n" style="--i:3">4</span><h3>Disbursal, then support</h3><p>Once the loan is paid out, we stay on for top-ups, balance transfers and insurance.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ WHY US ============ -->
+<section class="block why" id="why">
+  <div class="wrap">
+    <div class="why-left">
+      <h2 class="h2">Why people choose Solution 4 Finance</h2>
+      <p class="intro">We care more about the relationship than the single loan. Our job is to help with your short and long-term goals, so we can grow together.</p>
+      <ul class="values" aria-label="Our values">
+        <li><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="3" width="10" height="10" rx="2" transform="rotate(45 8 8)" fill="currentColor"/></svg>Fairness and transparency</li>
+        <li><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="3" width="10" height="10" rx="2" transform="rotate(45 8 8)" fill="currentColor"/></svg>Integrity and teamwork</li>
+        <li><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="3" width="10" height="10" rx="2" transform="rotate(45 8 8)" fill="currentColor"/></svg>Quality advice and after-sales service</li>
+      </ul>
+    </div>
+    <div class="reasons">
+      <article class="reason">
+        <h3>Dedicated specialists with 15 years in banking</h3>
+        <p>Our team has worked in banking and finance for 15 years. We know how each lender evaluates an application, which means fewer rejections and faster approvals for you.</p>
+      </article>
+      <article class="reason">
+        <h3>Advice that looks at your whole financial picture</h3>
+        <p>We look at your immediate need and your long-term goals together, then lay out the options with the lowest rates so you can decide with confidence.</p>
+      </article>
+      <article class="reason">
+        <h3>Clients first, before and after the loan</h3>
+        <p>Helping people is what drives us. We build lasting relationships and stay with you through every stage of your financial journey, not just until disbursal.</p>
+      </article>
+      <!--
+        TESTIMONIALS: add real client reviews here when available, e.g.
+        <article class="reason">
+          <h3>"Quote from a real client"</h3>
+          <p>Client name, city, loan type</p>
+        </article>
+      -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISION / MISSION ============ -->
+<section class="block purpose" aria-label="Vision and mission">
+  <div class="wrap">
+    <div>
+      <h3>Our vision</h3>
+      <blockquote>To lead in loan and insurance services by putting your needs first and caring for you at every step.</blockquote>
+    </div>
+    <div>
+      <h3>Our mission</h3>
+      <blockquote>To be the one-stop financial services company that adds real value to every client's loan and insurance needs.</blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ============ APPLY ============ -->
+<section class="block apply" id="apply">
+  <div class="wrap">
+    <div class="form-card">
+      <h2 class="h2">Apply for a loan</h2>
+      <p class="intro" style="margin-bottom:28px">Share a few details and an advisor will get back to you. Your details open in WhatsApp so you can review them before sending.</p>
+      <form id="apply-form" novalidate>
+        <div class="grid-2">
+          <div class="form-field">
+            <label for="f-name">Full name</label>
+            <input id="f-name" name="name" autocomplete="name" required>
+            <span class="err" id="e-name"></span>
+          </div>
+          <div class="form-field">
+            <label for="f-phone">Mobile number</label>
+            <input id="f-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="10-digit number" required>
+            <span class="err" id="e-phone"></span>
+          </div>
+          <div class="form-field">
+            <label for="f-loan">Loan type</label>
+            <select id="f-loan" name="loan" required>
+              <option value="">Choose a loan</option>
+              <option>Home loan</option>
+              <option>Personal loan</option>
+              <option>Construction loan</option>
+              <option>Car / auto loan</option>
+              <option>Business loan</option>
+              <option>Insurance</option>
+            </select>
+            <span class="err" id="e-loan"></span>
+          </div>
+          <div class="form-field">
+            <label for="f-amount">Amount needed (₹)</label>
+            <input id="f-amount" name="amount" inputmode="numeric" placeholder="e.g. 25,00,000">
+            <span class="err" id="e-amount"></span>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="f-city">City</label>
+          <input id="f-city" name="city" autocomplete="address-level2">
+          <span class="err"></span>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold" type="submit">Send on WhatsApp</button>
+          <p class="form-note">We only use your number to call you about this request.</p>
+        </div>
+        <div class="status" id="status" role="status"></div>
+      </form>
+    </div>
+
+    <aside class="contact-card" aria-label="Talk to an advisor">
+      <h3>Talk to an advisor</h3>
+      <p>Prefer a conversation? Call us and get advice on the right loan for you.</p>
+      <a class="phone" href="tel:+919718948002" target="_blank" rel="noopener">
+        <span class="phone-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg></span>
+        +91 97189 48002
+      </a>
+      <a class="phone" href="tel:+919953727702" target="_blank" rel="noopener">
+        <span class="phone-ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg></span>
+        +91 99537 27702
+      </a>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <a class="brand" href="#top"><span class="brand-mark">S4F</span>Solution 4 Finance</a>
+      <ul class="foot-links">
+        <li><a href="#rates">Loans &amp; rates</a></li>
+        <li><a href="#process">How it works</a></li>
+        <li><a href="#why">Why us</a></li>
+        <li><a href="#apply">Apply</a></li>
+      </ul>
+    </div>
+    <p class="disclaimer">*Interest rates shown are starting rates and are indicative only. Final rates, fees and approval are decided by the lending bank or institution based on its own policies and your eligibility. Solution 4 Finance is a loan and insurance advisory service. © <span id="yr"></span> Solution 4 Finance. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  /* ---------- Smooth in-page scrolling (works inside the Streamlit iframe) ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var id = a.getAttribute("href");
+      var target = id === "#top" ? document.body : document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      var y = id === "#top" ? 0 : target.getBoundingClientRect().top + window.pageYOffset - 68;
+      window.scrollTo({ top: y, behavior: reduceMotion ? "auto" : "smooth" });
+    });
+  });
+
+  /* ---------- Number formatting ---------- */
+  function rupees(n) { return "₹" + Math.round(n).toLocaleString("en-IN"); }
+  function shortRupees(n) {
+    if (n >= 1e7) return "₹" + (n / 1e7).toFixed(2).replace(/\.?0+$/, "") + " Cr";
+    if (n >= 1e5) return "₹" + (n / 1e5).toFixed(2).replace(/\.?0+$/, "") + " L";
+    return rupees(n);
+  }
+
+  /* ---------- EMI calculator ---------- */
+  var presets = {
+    home:         { rate: 8.40,  min: 500000, max: 50000000, step: 100000, amt: 3000000, tmax: 30, ten: 20 },
+    personal:     { rate: 10.50, min: 50000,  max: 4000000,  step: 10000,  amt: 500000,  tmax: 5,  ten: 3 },
+    construction: { rate: 8.50,  min: 500000, max: 30000000, step: 100000, amt: 2500000, tmax: 20, ten: 15 },
+    car:          { rate: 8.50,  min: 100000, max: 10000000, step: 50000,  amt: 800000,  tmax: 7,  ten: 5 }
+  };
+  var loanNames = { home: "Home loan", personal: "Personal loan", construction: "Construction loan", car: "Car / auto loan" };
+  var current = "home";
+  var amt = document.getElementById("amt"), rate = document.getElementById("rate"), ten = document.getElementById("ten");
+  var emiEl = document.getElementById("emi");
+  var donut = document.getElementById("donut-int");
+  var CIRC = 2 * Math.PI * 52;
+  var shownEmi = 0, raf = null;
+
+  function tweenEmi(to) {
+    if (reduceMotion) { emiEl.textContent = rupees(to); shownEmi = to; return; }
+    cancelAnimationFrame(raf);
+    var from = shownEmi, start = performance.now(), dur = 450;
+    (function step(now) {
+      var t = Math.min((now - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - t, 3);
+      shownEmi = from + (to - from) * eased;
+      emiEl.textContent = rupees(shownEmi);
+      if (t < 1) raf = requestAnimationFrame(step);
+    })(start);
+  }
+
+  function calculate() {
+    var P = +amt.value, annual = +rate.value, years = +ten.value;
+    var r = annual / 12 / 100, n = years * 12;
+    var emi = r === 0 ? P / n : P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+    var total = emi * n, interest = total - P;
+
+    document.getElementById("amt-out").textContent = shortRupees(P);
+    document.getElementById("rate-out").textContent = annual.toFixed(2) + "%";
+    document.getElementById("ten-out").textContent = years + (years === 1 ? " year" : " years");
+    document.getElementById("principal").textContent = rupees(P);
+    document.getElementById("interest").textContent = rupees(interest);
+    document.getElementById("total").textContent = rupees(total);
+    tweenEmi(emi);
+    var share = interest / total;
+    donut.setAttribute("stroke-dasharray", (share * CIRC).toFixed(1) + " " + CIRC.toFixed(1));
+  }
+
+  function applyPreset(type) {
+    var p = presets[type];
+    current = type;
+    amt.min = p.min; amt.max = p.max; amt.step = p.step; amt.value = p.amt;
+    ten.max = p.tmax; ten.value = p.ten;
+    rate.value = p.rate;
+    document.querySelectorAll(".chip").forEach(function (c) {
+      c.setAttribute("aria-pressed", c.dataset.type === type ? "true" : "false");
+    });
+    calculate();
+  }
+
+  document.querySelectorAll(".chip").forEach(function (c) {
+    c.addEventListener("click", function () { applyPreset(c.dataset.type); });
+  });
+  [amt, rate, ten].forEach(function (el) { el.addEventListener("input", calculate); });
+
+  // Start at zero and let the first calculation count up once the card has animated in
+  setTimeout(function () { applyPreset("home"); }, reduceMotion ? 0 : 900);
+  applyPresetSilently();
+  function applyPresetSilently() {
+    var p = presets.home;
+    amt.min = p.min; amt.max = p.max; amt.step = p.step; amt.value = p.amt;
+    ten.max = p.tmax; ten.value = p.ten; rate.value = p.rate;
+    document.getElementById("amt-out").textContent = shortRupees(p.amt);
+    document.getElementById("rate-out").textContent = p.rate.toFixed(2) + "%";
+    document.getElementById("ten-out").textContent = p.ten + " years";
+  }
+
+  /* ---------- Pre-fill the form from the calculator and rate list ---------- */
+  var loanSelect = document.getElementById("f-loan");
+  var amountInput = document.getElementById("f-amount");
+  document.getElementById("calc-apply").addEventListener("click", function () {
+    loanSelect.value = loanNames[current];
+    amountInput.value = Math.round(+amt.value).toLocaleString("en-IN");
+  });
+  document.querySelectorAll(".rate-row").forEach(function (row) {
+    row.addEventListener("click", function () { loanSelect.value = row.dataset.loan; });
+  });
+
+  /* ---------- Process line draws once in view ---------- */
+  var steps = document.getElementById("steps");
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { steps.classList.add("drawn"); io.disconnect(); }
+      });
+    }, { threshold: 0.35 });
+    io.observe(steps);
+  } else {
+    steps.classList.add("drawn");
+  }
+
+  /* ---------- Application form -> WhatsApp ---------- */
+  var form = document.getElementById("apply-form");
+  var status = document.getElementById("status");
+  var WHATSAPP = "919718948002";
+
+  function setError(id, msg) {
+    var input = document.getElementById("f-" + id);
+    input.closest(".form-field").classList.toggle("invalid", !!msg);
+    input.setAttribute("aria-invalid", msg ? "true" : "false");
+    document.getElementById("e-" + id).textContent = msg || "";
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    function val(id) { return document.getElementById("f-" + id).value; }
+    var name = val("name").trim();
+    var phone = val("phone").replace(/\D/g, "").replace(/^91(?=\d{10}$)/, "");
+    var loan = val("loan");
+    var amount = val("amount").trim();
+    var city = val("city").trim();
+    var ok = true;
+
+    if (name.length < 2) { setError("name", "Enter your full name."); ok = false; } else setError("name");
+    if (!/^[6-9]\d{9}$/.test(phone)) { setError("phone", "Enter a 10-digit Indian mobile number."); ok = false; } else setError("phone");
+    if (!loan) { setError("loan", "Choose the loan you need."); ok = false; } else setError("loan");
+    if (amount && !/^[\d,]+$/.test(amount)) { setError("amount", "Use numbers only, like 25,00,000."); ok = false; } else setError("amount");
+
+    if (!ok) {
+      var firstBad = form.querySelector('[aria-invalid="true"]');
+      if (firstBad) firstBad.focus();
+      return;
+    }
+
+    var msg = "Hello Solution 4 Finance, I'd like help with a loan.\n\n" +
+      "Name: " + name + "\nMobile: " + phone + "\nLoan type: " + loan +
+      (amount ? "\nAmount: ₹" + amount : "") + (city ? "\nCity: " + city : "");
+    var url = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg);
+    var win = window.open(url, "_blank", "noopener");
+
+    status.innerHTML = win
+      ? "WhatsApp opened with your details. Press send there and an advisor will reply."
+      : 'Your browser blocked the new tab. <a href="' + url + '" target="_blank" rel="noopener">Open WhatsApp with your details</a>, or call +91 97189 48002.';
+    status.classList.add("show");
+  });
+})();
+</script>
+<!-- n8n chatbot -->
+<script type="module">
+  import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+  createChat({
+    webhookUrl: 'https://codingmerijan.app.n8n.cloud/webhook/e22bdf24-2285-4e49-a2f0-4c0589baeed6/chat',
+    initialMessages: [
+      'Hi there! 👋',
+      'I can help you with home, personal, business, car and construction loans. What are you looking for today?'
+    ],
+    i18n: {
+      en: {
+        title: 'Solution 4 Finance',
+        subtitle: 'Ask us about loans, rates and documents.',
+        footer: '',
+        getStarted: 'New conversation',
+        inputPlaceholder: 'Type your question...'
+      }
+    }
+  });
+</script>
+</body>
+</html>
